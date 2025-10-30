@@ -1,0 +1,149 @@
+* {
+box-sizing: border-box;
+margin: 0;
+padding: 0;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #00562e 0%, #2a5298 100%); 
+    color: white;
+    text-align: center;
+    padding: 20px;
+    min-height: 100hv;
+}
+
+h1 {
+    font-size: 48px;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.95);
+}
+
+#balance-display {
+    background-color: rgba(255, 255, 255, 0.075);
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.dealer-section, .player-section {
+    background-color: rgba(0,0,0,0.3);
+    padding: 20px;
+    border-radius: 15px;
+    margin-bottom: 20px auto;
+    max-width: 800px;
+}
+
+h2 {
+    font-size: 28px;
+    margin-bottom: 15px;
+}
+
+.card-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    min-height: 140px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.card {
+    width: 80px;
+    height: 120px;
+    background-color: white;
+    border-radius: 8px;
+    display: flex; 
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    font-weight: bold;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    transition: transform 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card.red {
+    color: #e74c3c;
+}
+
+.card.black {
+    color: #2c3e50;
+}
+
+.card.hidden {
+    background-color: linear-gradient(25deg, #3498db, #2c3e50);
+    color: white;
+    font-size: 48px;
+}
+
+#message-display {
+    margin: 30px 0;
+}
+
+#message {
+    font-size: 32px;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+.controls {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+button {
+    padding: 15px 30px;
+    font-size: 20px;
+    font-weight: bold;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+
+}
+
+#deal-button {
+    background-color: #27ae60;
+    color: black;
+}
+
+#hit-button {
+    background-color: #3498bd;
+    color: black;
+}
+
+#stand-button {
+    background-color: #e67e22;
+    color: black;
+}
+
+#reset-button {
+    background-color: #e74c3c;
+    color: black;
+}
+
+button:hover:not(:disabled) {
+    box-shadow: 0 6px 8px rgba(0,0,0,0.4);
+    transform: translateY(-2px);
+}
+
+button:disabled {
+    background-color: 95a5a6;
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+button:active:not(:disabled) {
+    transform: translateY(0);
+    
+}
