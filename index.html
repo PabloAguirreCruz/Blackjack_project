@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BlackJack Game</title>
     <link rel="stylesheet" href="./css/style.css">
-    <script src="./js/app.js"></script>
+    <script defer src="./js/app.js"></script>
 </head>
 <body>
    <h1>♠️ BLACKJACK ♥️</h1>
@@ -18,13 +18,13 @@
      <div id="dealer-area" class="player-area">
           <h2>Dealer's Hand</h2>
           <div id="dealer-cards" class="cards"></div>
-          <p id="dealer-score">Score: 0</p>
+          <p>Score 0: <span id="dealer-score">0</span></p>
      </div>
     
      <div id="player-area" class="player-area">
           <h2>Your Hand</h2>
           <div id="player-cards" class="cards"></div>
-          <p id="player-score">Score: 0</p>
+          <p> Score: <span id="player-score">0</span></p>
      </div>
 
      <div id="message-display">
@@ -32,10 +32,10 @@
      </div>
 
      <div class="controls">
-        <button id="deal-button">Deal</button>
-        <button id="hit-button" disabled>Hit</button>
-        <button id="stand-button" disabled>Stand</button>   
-        <button id="reset-button">Reset</button>
+        <button id="deal-btn">Deal</button>
+        <button id="hit-btn" disabled>Hit</button>
+        <button id="stand-btn" disabled>Stand</button>   
+        <button id="reset-btn">Reset</button>
      </div>
 </body>
 </html>

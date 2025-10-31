@@ -26,16 +26,16 @@ let playerHand = [];
 let dealerHand = [];
 let playerScore = 0;
 let dealerScore = 0;
-let isGameActive = false;
+let gameActive = false;
 let playerBalance = 1000;
 
 
 /*-------------------------Cached Elements-------------------------*/
 
-const dealerCardsEl = document.querySelector('dealer-cards');
-const playerCardsEl = document.querySelector('player-cards');
-const dealerScoreEl = document.querySelector('dealer-score');
-const playerScoreEl = document.querySelector('player-score');
+const dealerCardsEl = document.querySelector('#dealer-cards');
+const playerCardsEl = document.querySelector('#player-cards');
+const dealerScoreEl = document.querySelector('#dealer-score');
+const playerScoreEl = document.querySelector('#player-score');
 const messageEl = document.querySelector('#message');
 const balanceEl = document.querySelector('#balance');
 
@@ -123,7 +123,7 @@ function calculateScore(hand) {
     // Adjust for Aces if score is over 21
     
     while (score > 21 && aceCount > 0) {
-        score -= 10;
+        score -= 10;   // <-- makes the ace count as 1 instead of 11
         aceCount--;
     }
 
@@ -131,32 +131,176 @@ function calculateScore(hand) {
 
 }
 
+// Initialize game
+
+function startGame() {
+    deck = createDeck(); 
+    deck = shuffleDeck(deck);
+
+    playerHand = [];
+    dealerHand = [];
+
+    // Deal initial cards
+    
+    playerHand.push(dealCard());
+    dealerHand.push(dealCard());
+    playerHand.push(dealCard());
+    dealerHand.push(dealCard());
+
+    // Calculate scores
+
+    playerScore = calculateScore(playerHand);
+    dealerScore = calculateScore(dealerHand);
+
+    // Set game as active
+
+    gameActive = true;
+
+    // Update buttons
+
+    dealBtn.disabled = true;
+    hitBtn.disabled = false;
+    standBtn.disabled = false;
+
+    messageEl.textContent = 'Hit or Stand?';
+
+    // Check for immediate blackjack
+
+    if (playerScore === 21) {
+        messageEl.textContent = 'Blackjack! You win!';
+        endGame();
+        return;
+
+    }
+
+    render();
+}
+
+// Player hits
+
+function playerHit() {
+    if(!gameActive) return;
+
+    // Deal one card to player
+
+    playerHand.push(dealCard());
+    playerScore = calculateScore(playerHand);
+
+    // Check for bust
+
+    if (playerScore > 21) {
+        messageEl.textContent = 'You busted! Dealer wins.';
+        endGame();
+    } else if (playerScore === 21) {
+        playerStand();
+    }
+
+    render();
+}
+
+// Player stands
+
+function playerStand() {
+    if(!gameActive) return;
+
+    // Dealer draws cards until reaching 17
+
+    while (dealerScore < 17) {
+        dealerHand.push(dealCard());
+        dealerScore = calculateScore(dealerHand);
+    }
+
+    // Determine winner
+    determineWinner();
+    endGame();
+}
+
+// Determine the winner
+
+function determineWinner() {
+    if (dealerScore > 21) {
+        messageEl.textContent = 'Dealer busts You win!';
+        playerBalance += 100;
+    } else if (playerScore > dealerScore) {
+        messageEl.textContent = 'You win!';
+        playerBalance += 100;
+    } else if (playerScore < dealerScore) {
+        messageEl.textContent = 'Dealer wins!';
+        playerBalance -= 100;
+    } else {
+        messageEl.textContent = "Push! It's a tie.";
+    }
+}
+
+// End the game
+
+function endGame() {
+    gameActive = false;
+    hitBtn.disabled = true;
+    standBtn.disabled = true;
+    dealBtn.disabled = false; 
+    render();
+}
+
+
+// Render the game state
+
+
+function render() {
+    playerCardsEl.innerHTML = '';
+    dealerCardsEl.innerHTML = '';
 
 
 
+// Render player's cards
+
+playerHand.forEach(card => {
+    const cardEl = document.createElement('div');
+    cardEl.classList.add('card');
+    cardEl.classList.add(card.suit === '♥️' || card.suit === '♦️' ? 'red' : 'black');
+    cardEl.innerHTML = `<div>${card.rank}</div><div>${card.suit}</div>`;
+    playerCardsEl.appendChild(cardEl);
+})
+
+//Render dealer's cards
+
+dealerHand.forEach((card, index) => {
+    const cardEl = document.createElement('div');
+    cardEl.classList.add('card');
+
+    // Hide first dealer card if game is active 
+    if (index === 0 && gameActive) {
+        cardEl.classList.add('hidden');
+        cardEl.textContent = '?';
+    } else {
+        cardEl.classList.add(card.suit === '♥️' || card.suit === '♦️' ? 'red' : 'black');
+        cardEl.innerHTML = `<div>${card.rank}</div><div>${card.suit}</div>`;
+    }
+
+    dealerCardsEl.appendChild(cardEl);
+});
+
+//Update scores
+
+playerScoreEl.textContent = playerScore;
+dealerScoreEl.textContent = gameActive ? '?' : dealerScore;
+
+//Update balance
 
 
+balanceEl.textContent = playerBalance;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+}
 
 
 /*-------------------------Event Listeners-------------------------*/
+
+
+dealBtn.addEventListener('click', startGame);
+hitBtn.addEventListener('click', playerHit);
+standBtn.addEventListener('click', playerStand);
+resetBtn.addEventListener('click', init);
+
+// Initialize on load
+
+init();

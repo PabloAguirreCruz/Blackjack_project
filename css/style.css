@@ -10,7 +10,7 @@ body {
     color: white;
     text-align: center;
     padding: 20px;
-    min-height: 100hv;
+    min-height: 100vh;
 }
 
 h1 {
@@ -32,7 +32,7 @@ h1 {
     background-color: rgba(0,0,0,0.3);
     padding: 20px;
     border-radius: 15px;
-    margin-bottom: 20px auto;
+    margin: 20px auto;
     max-width: 800px;
 }
 
@@ -112,22 +112,22 @@ button {
 
 }
 
-#deal-button {
+#deal-btn {
     background-color: #27ae60;
+    color: white;
+}
+
+#hit-btn {
+    background-color: #3498db;
     color: black;
 }
 
-#hit-button {
-    background-color: #3498bd;
-    color: black;
-}
-
-#stand-button {
+#stand-btn {
     background-color: #e67e22;
     color: black;
 }
 
-#reset-button {
+#reset-btn {
     background-color: #e74c3c;
     color: black;
 }
@@ -138,7 +138,7 @@ button:hover:not(:disabled) {
 }
 
 button:disabled {
-    background-color: 95a5a6;
+    background-color: #95a5a6;
     cursor: not-allowed;
     opacity: 0.5;
 }
