@@ -6,7 +6,10 @@ padding: 0;
 
 body {
     font-family: 'Arial', sans-serif;
-    background: linear-gradient(135deg, #00562e 0%, #2a5298 100%); 
+    background-image: url('https://as2.ftcdn.net/v2/jpg/02/19/64/21/1000_F_219642180_uKGpUdfIZPhJZ4BOkWKIyKfX6IqPHUw1.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: scroll; 
     color: white;
     text-align: center;
     padding: 20px;
@@ -20,7 +23,7 @@ h1 {
 }
 
 #balance-display {
-    background-color: rgba(255, 255, 255, 0.075);
+    /*background-color: rgba(255, 255, 255, 0.075);*/
     padding: 10px;
     border-radius: 8px;
     margin-bottom: 30px;
@@ -28,12 +31,16 @@ h1 {
     font-weight: bold;
 }
 
-.dealer-section, .player-section {
+.player-area {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     background-color: rgba(0,0,0,0.3);
     padding: 20px;
     border-radius: 15px;
     margin: 20px auto;
-    max-width: 800px;
+    width: 800px;
 }
 
 h2 {
@@ -63,6 +70,17 @@ h2 {
     font-weight: bold;
     box-shadow: 0 4px 8px rgba(0,0,0,0.3);
     transition: transform 0.3s;
+    animation: cardAppear 0.3s ease-out;
+}
+
+.cards {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 10px;
+    min-height: 140px;
+    align-items: center;
+    flex-wrap: wrap;
 }
 
 .card:hover {
@@ -147,3 +165,107 @@ button:active:not(:disabled) {
     transform: translateY(0);
     
 }
+
+#bet-section {
+    /*background-color: rgba(255, 255, 255, 0.075);*/
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-size: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+
+}
+
+#bet-input {
+    width: 100px;
+    padding: 8px;
+    font-size: 18px;
+    font-weight: bold;
+    border: 2px solid #27ae60;
+    border-radius: 5px;
+    text-align: center;
+
+}
+
+#bet-input:focus {
+    outline: none;
+    border-color: #2ecc71;
+    box-shadow: 0 0 5px rgba(46, 204, 113, 0.5);
+}
+
+/* Deck styling */
+
+#deck-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translateY(-50%);
+    width: 80px; 
+    height: 120px;
+    z-index: 10;
+}
+
+.deck-card {
+    position: absolute;
+    width: 80px;
+    height: 120px;
+    background: linear-gradient(135deg, #3498db, 2c3e50);
+    border-radius: 8px;
+    border: 2px solid #34495e;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+}
+
+.deck-card:nth-child(1) { transform: translate(0px, 0px); }
+.deck-card:nth-child(2) { transform: translate(2px, 2px); }
+.deck-card:nth-child(3) { transform: translate(4px, 4px); }
+.deck-card:nth-child(4) { transform: translate(6px, 6px); }
+.deck-card:nth-child(5) { transform: translate(8px, 8px); }
+
+/* Card dealing animation */ 
+
+@keyframes dealToPlayer {
+    0% {
+        transform: translate(0, 0) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(calc(50vw - 40px), calc(60vh - 60px)) scale(1);
+        opacity: 0;
+    }
+}
+
+@keyframes dealToDealer {
+    0% {
+        transform: translate(0, 0) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(calc(50vw - 40px), calc(-20vh)) scale(1);
+        opacity: 0;
+    }
+}
+
+.dealing-to-player {
+    animation: dealToPlayer 0.6s ease-out forwards;
+}
+
+.dealing-to-dealer {
+    animation: dealToDealer 0.6s ease-out forwards;
+}
+
+@keyframes cardAppear {
+    0% {
+        transform: scale(0.5);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+
+

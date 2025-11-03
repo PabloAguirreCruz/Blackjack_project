@@ -10,15 +10,29 @@
 <body>
    <h1>♠️ BLACKJACK ♥️</h1>
 
+   <div id="deck-container">
+    <div class="deck-card"></div>
+    <div class="deck card"></div>
+    <div class="deck-card"></div>
+    <div class="deck-card"></div>
+    <div class="deck-card"></div>
+   </div>
+
    <div id="balance-display">
     <p>Balance: $<span id="balance">1000</span></p>
+   </div>
+
+   <div id="bet-section">
+    <label for="bet-input">Place your bet: $</label>
+    <input type="number" id="bet-input" min="1" max="100" value="10" step="5">
+    <span>($1 - $100)</span>
    </div>
 
     <div id="game-area">
      <div id="dealer-area" class="player-area">
           <h2>Dealer's Hand</h2>
           <div id="dealer-cards" class="cards"></div>
-          <p>Score 0: <span id="dealer-score">0</span></p>
+          <p>Score: <span id="dealer-score">0</span></p>
      </div>
     
      <div id="player-area" class="player-area">

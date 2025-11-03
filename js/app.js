@@ -1,3 +1,7 @@
+
+
+
+
 /*-------------------------Constants-------------------------*/
 
 const suits = ['♠️', '♥️', '♣️', '♦️'];
@@ -28,6 +32,7 @@ let playerScore = 0;
 let dealerScore = 0;
 let gameActive = false;
 let playerBalance = 1000;
+let currentBet = 0;
 
 
 /*-------------------------Cached Elements-------------------------*/
@@ -38,6 +43,7 @@ const dealerScoreEl = document.querySelector('#dealer-score');
 const playerScoreEl = document.querySelector('#player-score');
 const messageEl = document.querySelector('#message');
 const balanceEl = document.querySelector('#balance');
+const betInputEl = document.querySelector('#bet-input');
 
 const dealBtn = document.querySelector('#deal-btn');
 const hitBtn = document.querySelector('#hit-btn');
@@ -57,12 +63,15 @@ function init() {
     playerScore = 0;
     dealerScore = 0;
     gameActive = false;
+    currentBet: 0; 
+    
 
 
     messageEl.textContent = 'Welcome to Blackjack! Click Deal to start.';
     dealBtn.disabled = false;
     hitBtn.disabled = true;
     standBtn.disabled = true;
+    betInputEl.disabled = false;
 
 
     render();
@@ -134,6 +143,23 @@ function calculateScore(hand) {
 // Initialize game
 
 function startGame() {
+
+    const betAmount = parseInt(betInputEl.value);
+    
+    if (isNaN(betAmount) || betAmount < 1 || betAmount > 100) {
+        messageEl.textContent = 'Please enter a bet amount between $1 and $100';
+        return; 
+    }
+    if (betAmount > playerBalance) {
+        messageEl.textContent = 'Insufficient balance! Lower your bet.';
+        return;
+    }
+
+    // Deduct bet from balance
+
+    currentBet = betAmount;
+    playerBalance -= currentBet;
+    betInputEl.disabled = true;
     deck = createDeck(); 
     deck = shuffleDeck(deck);
 
@@ -168,6 +194,7 @@ function startGame() {
 
     if (playerScore === 21) {
         messageEl.textContent = 'Blackjack! You win!';
+        playerBalance += currentBet * 2.5;
         endGame();
         return;
 
@@ -220,15 +247,17 @@ function playerStand() {
 function determineWinner() {
     if (dealerScore > 21) {
         messageEl.textContent = 'Dealer busts You win!';
-        playerBalance += 100;
+        playerBalance += currentBet * 2;
     } else if (playerScore > dealerScore) {
         messageEl.textContent = 'You win!';
-        playerBalance += 100;
+        playerBalance += currentBet * 2;
     } else if (playerScore < dealerScore) {
         messageEl.textContent = 'Dealer wins!';
-        playerBalance -= 100;
+    
     } else {
+
         messageEl.textContent = "Push! It's a tie.";
+        playerBalance += currentBet; 
     }
 }
 
@@ -238,7 +267,8 @@ function endGame() {
     gameActive = false;
     hitBtn.disabled = true;
     standBtn.disabled = true;
-    dealBtn.disabled = false; 
+    dealBtn.disabled = false;
+    betInputEl.disabled = false;  
     render();
 }
 
