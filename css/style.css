@@ -29,6 +29,7 @@ h1 {
     margin-bottom: 30px;
     font-size: 18px;
     font-weight: bold;
+    text-align: left;
 }
 
 .player-area {
@@ -166,6 +167,8 @@ button:active:not(:disabled) {
     
 }
 
+/* removed background-color since it was a shaded box, and justify-content since I wanted it to be displayed on the left side of the screen */
+
 #bet-section {
     /*background-color: rgba(255, 255, 255, 0.075);*/
     padding: 15px;
@@ -173,9 +176,10 @@ button:active:not(:disabled) {
     margin-bottom: 20px;
     font-size: 18px;
     display: flex;
-    justify-content: center;
+    /*justify-content: center;*/
     align-items: center;
     gap: 10px;
+    text-align: left;
 
 }
 
@@ -201,7 +205,7 @@ button:active:not(:disabled) {
 #deck-container {
     position: fixed;
     top: 50%;
-    left: 50%;
+    left: 50px;
     transform: translateY(-50%);
     width: 80px; 
     height: 120px;
@@ -212,7 +216,7 @@ button:active:not(:disabled) {
     position: absolute;
     width: 80px;
     height: 120px;
-    background: linear-gradient(135deg, #3498db, 2c3e50);
+    background: linear-gradient(135deg, #3498db, #2c3e50);
     border-radius: 8px;
     border: 2px solid #34495e;
     box-shadow: 0 4px 8px rgba(0,0,0,0.5);

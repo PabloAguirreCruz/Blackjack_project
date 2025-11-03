@@ -63,7 +63,7 @@ function init() {
     playerScore = 0;
     dealerScore = 0;
     gameActive = false;
-    currentBet: 0; 
+    currentBet = 0;  
     
 
 
@@ -96,6 +96,36 @@ function createDeck() {
 
     return newDeck;
 
+}
+
+// Animation of card dealing from deck
+
+function animateDeal(target) {
+    const deckCard = document.querySelector('.deck-card:last-child');
+        if(!deckCard) return;
+
+        const animatedCard = deckCard.cloneNode(true);
+        document.body.appendChild(animatedCard);
+
+        animatedCard.style.position = 'fixed';
+        animatedCard.style.left = '50px';
+        animatedCard.style.top = '50%';
+        animatedCard.style.zIndex = '100';
+
+        // Add animation class based on target
+
+        if (target === 'player') {
+            animatedCard.classList.add('dealing-to-player');
+        } else {
+            animatedCard.classList.add('dealing-to-dealer');
+        }
+
+        // Remove the animated card after animation completes
+
+        setTimeout(() => {
+            animatedCard.remove();
+        }, 600);
+    
 }
 
 // Shuffling deck of cards
@@ -145,7 +175,7 @@ function calculateScore(hand) {
 function startGame() {
 
     const betAmount = parseInt(betInputEl.value);
-    
+
     if (isNaN(betAmount) || betAmount < 1 || betAmount > 100) {
         messageEl.textContent = 'Please enter a bet amount between $1 and $100';
         return; 
@@ -160,6 +190,7 @@ function startGame() {
     currentBet = betAmount;
     playerBalance -= currentBet;
     betInputEl.disabled = true;
+
     deck = createDeck(); 
     deck = shuffleDeck(deck);
 
@@ -168,15 +199,44 @@ function startGame() {
 
     // Deal initial cards
     
-    playerHand.push(dealCard());
-    dealerHand.push(dealCard());
-    playerHand.push(dealCard());
-    dealerHand.push(dealCard());
+    setTimeout(() => {
+        animateDeal('player');
+        playerHand.push(dealCard());
+    }, 100);
 
+    setTimeout(() => {
+        animateDeal('dealer');
+        dealerHand.push(dealCard());
+        render();
+    }, 300);
+
+    setTimeout(() => {
+        animateDeal('player');
+        playerHand.push(dealCard());
+        render();
+    }, 500);
+
+    setTimeout(() => {
+        animateDeal('dealer');
+        dealerHand.push(dealCard());
+    
     // Calculate scores
 
     playerScore = calculateScore(playerHand);
     dealerScore = calculateScore(dealerHand);
+
+
+    // Check for immediate blackjack
+
+    if (playerScore === 21) {
+        messageEl.textContent = 'Blackjack! You win!';
+        playerBalance += currentBet * 2.5;
+        endGame();
+        return;
+    }
+
+    render();
+}, 700);
 
     // Set game as active
 
@@ -189,29 +249,23 @@ function startGame() {
     standBtn.disabled = false;
 
     messageEl.textContent = 'Hit or Stand?';
-
-    // Check for immediate blackjack
-
-    if (playerScore === 21) {
-        messageEl.textContent = 'Blackjack! You win!';
-        playerBalance += currentBet * 2.5;
-        endGame();
-        return;
-
-    }
-
-    render();
 }
+
+
 
 // Player hits
 
 function playerHit() {
     if(!gameActive) return;
 
+    // Animate dealing
+    animateDeal('player');
+
     // Deal one card to player
 
-    playerHand.push(dealCard());
-    playerScore = calculateScore(playerHand);
+    setTimeout(() => {
+        playerHand.push(dealCard());
+        playerScore = calculateScore(playerHand);
 
     // Check for bust
 
@@ -223,6 +277,7 @@ function playerHit() {
     }
 
     render();
+  }, 300);
 }
 
 // Player stands
