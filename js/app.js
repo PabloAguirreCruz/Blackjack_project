@@ -386,6 +386,6 @@ hitBtn.addEventListener('click', playerHit);
 standBtn.addEventListener('click', playerStand);
 resetBtn.addEventListener('click', init);
 
-// Initialize on load
+// Initialize on loadz
 
 init();

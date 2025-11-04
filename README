@@ -1,0 +1,36 @@
+♠️ BLACKJACK ♥️
+
+A classic casino blackjack game where you play against the dealer trying to get as close to 21 as possible without going over.
+
+About the Game
+
+I built this blackjack game because I've always enjoyed the strategy and excitement of casino card games. Blackjack is simple enough to learn but has enough depth to stay interesting. This project gave me a chance to practice JavaScript game logic and DOM manipulation while creating something fun to play.
+
+Getting Started
+
+Play the game here: (https://pabloaguirrecruz.github.io/Blackjack_project/)
+
+How to play:
+
+
+- Place a bet between $1 and $100
+- Click Deal to start the round
+- Choose Hit to draw another card or Stand to keep your current hand
+- Try to beat the dealer without going over 21
+- Aces count as 11 or 1 automatically to help you avoid busting
+
+Screenshots
+
+/SS_Blackjack.png
+
+Technologies Used
+
+JavaScript
+HTML
+CSS
+
+Next Steps
+
+- Add double down feature to let players double their bet after initial deal
+- Include card splitting when dealt two of the same card
+- Add sound effects for dealing cards and winning
